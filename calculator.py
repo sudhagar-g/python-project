@@ -5,6 +5,7 @@ def button_press(num):
     global  sum_text
     sum_text = sum_text + str(num)
     output_label.set(sum_text)
+    
 
 def equation():
     global sum_text
