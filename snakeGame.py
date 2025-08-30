@@ -1,38 +1,45 @@
-from tkinter import *
-import random
+from tkinter import *   #importing GUI library to create window,canvas,button label etc. 
+import random 
 
 
-GAME_WIDTH =  700
-GAME_HEIGHT = 700
-SPEED = 100
-SPACE_SIZE  = 25
-BODY_PARTS = 3
-SNAKE_COLOR = "#00FF00"
+ 
+
+GAME_WIDTH =  700   #game width
+GAME_HEIGHT = 700   #game height
+SPEED = 100    #game speed
+SPACE_SIZE  = 25    #snake food size and movement step 25 px
+BODY_PARTS = 3      #starting length of the snake
+SNAKE_COLOR = "#00FF00"   
 FOOD_COLOR = "#FF0000"
 BACKGROUND_COLOR = "#000000"
 
+
+#creating class  for snake 
 class Snake:
     def __init__(self):
-         self.body_size = BODY_PARTS
-         self.coordinates = []
-         self.squares = []
+         self.body_size = BODY_PARTS    
+         self.coordinates = []        # a list storing each part of the snake
+         self.squares = []              #storing rectangle shape  --> snake body part
 
-         for i in range(0,BODY_PARTS):
+         
+     
+         for i in range(0,BODY_PARTS):      # This code is initializing the snake’s body parts
               self.coordinates.append([0,0])
 
-         for x,y in self.coordinates:
+         for x,y in self.coordinates:        # this line create snake body part with canvas rectangle shape 
                    square = canvas.create_rectangle(x,y,x+SPACE_SIZE,y+SPACE_SIZE,fill =SNAKE_COLOR,tag = "snake")
-                   self.squares.append(square)
+                   self.squares.append(square)  
          
-
+#creating class for food
 class Food:
 
-        def __init__(self):
-             x= random.randint(0,(GAME_WIDTH // SPACE_SIZE)-1) * SPACE_SIZE
-             y= random.randint(0,(GAME_HEIGHT // SPACE_SIZE)-1) * SPACE_SIZE
-
-             self.coordinates=[x,y]
-             canvas.create_oval(x,y,x+SPACE_SIZE,y+SPACE_SIZE,fill = FOOD_COLOR,tag = "food")
+        def __init__(self):             
+               x= random.randint(0,(GAME_WIDTH // SPACE_SIZE)-1) * SPACE_SIZE         # to initializing the food in  in random place and
+               y= random.randint(0,(GAME_HEIGHT // SPACE_SIZE)-1) * SPACE_SIZE      #x ,y is coordinates for food randome location
+           
+                    #creating food shape
+               self.coordinates=[x,y]
+               canvas.create_oval(x,y,x+SPACE_SIZE,y+SPACE_SIZE,fill = FOOD_COLOR,tag = "food")
              
     
 def new_turn(snake,food):
@@ -69,6 +76,8 @@ def new_turn(snake,food):
 
          food = Food()
 
+         
+
     else:    
 
             del snake.coordinates[-1]
@@ -78,7 +87,7 @@ def new_turn(snake,food):
             del snake.squares[-1]
 
     if check_collisions(snake):
-         game_over()  
+         game_over()   
 
     else: 
         window.after(SPEED,new_turn,snake,food)   
